@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>College Bowl Picker Page</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  
+  <style>
+  #confidenceSort { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  #confidenceSort li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1em; height: 12px; }
+	
+  </style>
+  <script>
+	$(document).ready(function() {  
+		$('#confidenceSort').sortable({ 
+			update: function() {
+				var confidenceArr = $('#confidenceSort').sortable('serialize');
+				$('#queryStr').text(confidenceArr);
+				$.post("postpicks.php", {}, 
+					function(result){
+						alert(result);
+						$('#responseText').text(data);
+					}).fail(function(a,b,c) {
+    console.log(a);
+    console.log(b);
+    console.log(c);});
+					
+					
+				}
+			});
+	});
+  </script>
+</head>
+<body>
+ 
+	<ul id="confidenceSort">
+	  <li id="game_1">Game 1</li>
+	  <li id="game_2">Game 2</li>
+	  <li id="game_3">Game 3</li>
+	  <li id="game_4">Game 4</li>
+	  <li id="game_5">Game 5</li>
+	  <li id="game_6">Game 6</li>
+	  <li id="game_7">Game 7</li>
+	</ul>
+	<input id="saveBtn" type="button" value="Save" />
+	<div id="queryStr"></div>
+	<div id="responseText"></div>
+ 
+ 
+</body>
+</html>
