@@ -35,9 +35,9 @@ $(document).ready(function() {
 				winners = $('#winners').serialize();
 				$.post("postpicks.php", confidence, 
 					function(result){
-						$('#responseText').text("CONFIDENCE Query is complete.");
+						//$('#responseText').text("CONFIDENCE Query is complete.");
 					})
-				$.post("postpicks.php", winners, 
+				$.post("postpicks.php", {winStr: winners}, 
 					function(result){
 						$('#responseText').text("WINNERS Query is complete." + result);
 					})

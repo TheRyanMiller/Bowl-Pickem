@@ -9,7 +9,6 @@
 	
 	//Update user's confidence
 	$i=0;
-	
 	$result = mysqli_query($link, $query);
 	foreach ($_POST['game'] as $value) {
 		$query = "REPLACE INTO picks SET
@@ -22,18 +21,22 @@
 	}
 	//Reset counter
 	$i=0;
-	foreach ($_POST['winner'] as $value) {
-		$query = "REPLACE INTO picks SET
-				winner = '".$i."'
-				WHERE gameid = ".$winner.",
+	$winners=$_POST['winStr'];
+	$winArr = explode("&", $winners);
+
+	foreach ($winArr as $value){
+		$data = explode("=",$value);
+		$gameId = $data[0];
+		$winTeam = str_replace("+", " ", $data[1]);
+		echo $winTeam;
+		$query = "UPDATE picks SET
+				winner = '".$winTeam."'
+				WHERE gameid = ".$gameId." 
 				AND userid='".$uid."'";
-		errmsg($query);
 		$result = mysqli_query($link, $query);
-		$i++;
 		if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
 	}
+	echo "aaaaaa";
 	echo $query;
-	//Update user's winner picks
-	//      $_POST['winner']
-
+	echo "bbbbbb";
 ?>

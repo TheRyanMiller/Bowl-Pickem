@@ -76,5 +76,5 @@
   <?php
   exit;
 }
-echo "Welcome ".$uid." (<a href='logout.php'>logout</a>)";
+//echo "Welcome ".$uid." (<a href='logout.php'>logout</a>)";
 ?>
