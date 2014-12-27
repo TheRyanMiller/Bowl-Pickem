@@ -8,23 +8,31 @@ $(document).ready(function() {
 
 	var confidence;
 	var winners;
+
+	//highlight buttons green
+    $('input:radio').each(function(i,e) {
+        if($(e).is(':checked')){
+            $(e).parent().addClass('highlight');
+            var $td = $(e).parent();
+            $td.siblings().removeClass('highlight');
+            $td.next().addClass('highlight');
+        }
+	});
+	$('input:radio').change(function() {
+		$('#confirmSave').text("");
+		$('#saveWarn').text("You have made changes that have not been saved yet.");
+		$(this).parent().addClass('highlight');
+		var $td = $(this).parent();
+		$td.siblings().removeClass('highlight');
+		$td.next().addClass('highlight');
+	});
+		
 	$('#confidenceSort').sortable({
 			update: function() {
 				confidence = $('#confidenceSort').sortable('serialize');
 				winners = $('#winners').serialize();
-				$('#queryStr').text(confidence);
-				$('#winarray').text(winners);
-				
-				//IGNORE
-				//var list = $('#confidenceSort').find('tr');
-				//var str="";
-				//var z;
-				//for (var z = 0; z < list.length; ++z) {
-				//	list[z].id = 1;
-				//	str = str + list[z].id;
-				//}
-				//$('#confidenceSort').empty();
-				//alert(str);
+				$('#confirmSave').text("");
+				$('#saveWarn').text("You have made changes that have not been saved yet.");
 			}
 	});
 	
@@ -35,11 +43,14 @@ $(document).ready(function() {
 				winners = $('#winners').serialize();
 				$.post("postpicks.php", confidence, 
 					function(result){
+						//$('#postRes').text(result);
 						//$('#responseText').text("CONFIDENCE Query is complete.");
 					})
 				$.post("postpicks.php", {winStr: winners}, 
 					function(result){
-						$('#responseText').text("WINNERS Query is complete." + result);
-					})
-		});
+						$('#confirmSave').text("Your picks have been successfully saved.");
+						$('#saveWarn').text("");
+						//$('#confirmSave').text(result);
+				})
+	});
 });

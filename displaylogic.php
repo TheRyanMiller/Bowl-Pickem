@@ -5,9 +5,9 @@
  * insert blank value for "Winner" in picks table to record a record
  * Set unique key on PICKS table and USE REPLACE INTO http://dev.mysql.com/doc/refman/5.0/en/replace.html
  * */
+ 
 //has user made picks?
 //SPIT FROM DB
-
 	function populatePickList($user){
 		//prep table HTML
 		$bldTbl= "<form id='winners'><table id='confidenceTbl'><thead id='headerRow'><td>Bowl</td><td></td><td>Team 1</td><td></td><td>Team 2</td><td>Game Day</td></thead>".
@@ -34,21 +34,24 @@
 			$result = mysqli_query($link, $sql);
 			if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
 			$rowCount = mysqli_num_rows($result);
-			echo "<br>Row Count: ".$rowCount."<br>";
 			echo $bldTbl;
 			//loop through games and output HTML string
 			while ($row = mysqli_fetch_row($result)){
 				//gameid[0], team1[1], team2[2], gameDay[3], bowl[4], userid[5], confidence[6], winner[7]
-				echo "<tr id='game_".$row[0]."'><td class='bowl'>".$row[4]."</td>
-				<td><input type='radio' name='".$row[0]."' value='".$row[1]."'></input>
-				</td><td class='team1'>".$row[1]."</td><td>
-				<input type='radio' name='".$row[0]."' value='".$row[2]."'></input>
+				if ($row[1] == $row[7]){$val="checked";}
+				else{$val="";}
+				$rowBld= "<tr id='game_".$row[0]."'><td class='bowl'>".$row[4]."</td>
+				<td id='radiocell'><input type='radio' name='".$row[0]."' value='".$row[1]."' ".$val."/>
+				</td><td class='team1'>".$row[1]."</td><td id='radiocell'>";
+				if ($row[2] == $row[7]){$val="checked";}
+				else{$val="";}
+				$rowBld= $rowBld ."<input type='radio' name='".$row[0]."' value='".$row[2]."' ".$val." />
 				</td><td class='team2'>".$row[2]."</td><td class='gameDay'>".$row[3]."</td></tr>";
+				echo $rowBld;
 			}
 			echo $endTbl;
 		}
 		else{
-			echo "no rows found";
 			//no picks made yet- print default set of games
 			$sql="SELECT games.id, games.team1, games.team2, games.date, games.bowl ".
 				"FROM games ".
@@ -61,33 +64,12 @@
 			while ($row = mysqli_fetch_row($result)){
 				//gameid[0], team1[1], team2[2], gameDay[3], bowl[4], userid[5], confidence[6], winner[7]
 				echo "<tr id='game_".$row[0]."'><td class='bowl'>".$row[4]."</td>
-				<td><input type='radio' name='".$row[0]."' value='".$row[1]."'></input>
-				</td><td class='team1'>".$row[1]."</td><td>
+				<td id='radiocell'><input type='radio' name='".$row[0]."' value='".$row[1]."'></input>
+				</td><td class='team1'>".$row[1]."</td><td id='radiocell'>
 				<input type='radio' name='".$row[0]."' value='".$row[2]."'></input>
 				</td><td class='team2'>".$row[2]."</td><td class='gameDay'>".$row[3]."</td></tr>";
 			}
 			echo $endTbl;
 		}
 	}
-
-//SEND TO DB
-
-/*
-	
-<tr id=$gameId><td>$bowl</td><td>$team1</td><td>$team2</td><td>$gameDay</td></tr>
-
-// Get your list items
-var items = $('#confidenceSort').find('tr');
-
-// The new index order for each item
-var order = [4, 2, 0, 1, 3];
-
-// Map the existing items to their new positions        
-var orderedItems = $.map(order, function(value) {
-    return items.get(value);
-});
-
-// Clear the old list items and insert the newly ordered ones
-$('#mylist').empty().html(orderedItems);
-*/
 ?>
