@@ -10,9 +10,9 @@
 //SPIT FROM DB
 	function populatePickList($user){
 		//prep table HTML
-		$bldTbl= "<form id='winners'><table id='confidenceTbl'><thead id='headerRow'><td>Bowl</td><td></td><td>Team 1</td><td></td><td>Team 2</td><td>Game Day</td></thead>".
+		$bldTbl= "<form id='winners'><table id='confidenceTbl'><col width='180'><col width='10'><col width='180'><col width='10'><col width='180'><thead id='headerRow'><td>Bowl</td><td></td><td>Team 1</td><td></td><td>Team 2</td><td>Game Day</td></thead>".
 				"<tbody id='confidenceSort'>";
-		$endTbl="</tbody></tbody></table></form>";
+		$endTbl="<tr id='saveBtnRw'><td bgcolor='white' colspan='6'><input id='saveBtn' type='button' value='Save' /></td></tr><tr><td bgcolor='white' colspan='6' id='warnOrComp'></td></tr></tbody></tbody></table></form>";
 				
 		//pass db credentials to function
 		include 'login.php';

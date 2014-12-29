@@ -31,8 +31,7 @@ $(document).ready(function() {
 			update: function() {
 				confidence = $('#confidenceSort').sortable('serialize');
 				winners = $('#winners').serialize();
-				$('#confirmSave').text("");
-				$('#saveWarn').text("You have made changes that have not been saved yet.");
+				$('#warnOrComp').text("You have made changes that have not been saved yet.");
 			}
 	});
 	
@@ -48,9 +47,7 @@ $(document).ready(function() {
 					})
 				$.post("postpicks.php", {winStr: winners}, 
 					function(result){
-						$('#confirmSave').text("Your picks have been successfully saved.");
-						$('#saveWarn').text("");
-						//$('#confirmSave').text(result);
+						$('#warnOrComp').text("Your picks have been successfully saved.");
 				})
 	});
 });
