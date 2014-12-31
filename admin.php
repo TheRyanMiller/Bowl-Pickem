@@ -153,7 +153,7 @@ TABS AND BODY OF ADMIN PAGE----------------
 						<tr><td>Team 1:</td><td><input type='text' name='team1' /><font color='red'>*</font></td></tr>
 						<tr><td>Team 2:</td><td><input type='text' name='team2' /><font color='red'>*</font></td></tr>
 						<tr><td>Game Day:</td><td><input type='date' name='gameDay' /><font color='red'>*</font></td></tr>
-						<tr><td>Season:</td><td>  <select id="cmbMake" name="Make" >
+						<tr><td>Season:</td><td>  <select id="addGameSeason" name="gameSeason" >
 													 <option value="0">Select season</option>
 													 <option value="2014">2014</option>
 													</select><font color='red'>*</font></td></tr>
@@ -164,9 +164,17 @@ TABS AND BODY OF ADMIN PAGE----------------
         </div>
  <!-- TAB2 -->
         <div id="tab2" class="tab">
-            <p>Tab #2 content goes here!</p>
-            <p>Donec pulvinar neque sed semper lacinia. Curabitur lacinia ullamcorper nibh; quis imperdiet v
-            elit eleifend ac. Donec blandit mauris eget aliquet lacinia! Donec pulvinar massa interdum risus ornare mollis. In hac habitasse platea dictumst. Ut euismod tempus hendrerit. Morbi ut adipiscing nisi. Etiam rutrum sodales gravida! Aliquam tellus orci, iaculis vel.</p>
+            <p>Add/Update Seasons</p>
+            <form id='editSeasons' action=''>
+					<table id='addSeasonTbl'>
+						<thead id='headerRow'><tr><td colspan='2'>Add a season</td></tr></thead>
+						<tr><td>Title:</td><td><input type='text' name='seasonTitle' /><font color='red'>*</font></td></tr>
+						<tr><td>Start Date:</td><td><input type='date' name='startDate' /><font color='red'>*</font></td></tr>
+						<tr><td>Lock Date:</td><td><input type='date' name='lockDate' /><font color='red'>*</font></td></tr>
+						<tr><td>End Date:</td><td><input type='date' name='endDate' /><font color='red'>*</font></td></tr>
+						<tr><td colspan='2'><input type='submit' name='add' value='Add'></td>
+					</table>
+				</form>
         </div>
  <!-- TAB3 -->
         <div id="tab3" class="tab">

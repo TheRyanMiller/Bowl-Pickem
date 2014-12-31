@@ -1,6 +1,7 @@
 function seasonSelect(season){
-	$.post("updateresults.php", {season: test}, function(result){
-		errmsg(season);
+	alert(season);
+	$.post("updateresults.php", {seasonStr: season}, function(result){ 
+		//{pickupname : stringofdata}
 	});
 };
 
