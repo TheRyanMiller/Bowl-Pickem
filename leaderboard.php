@@ -1,10 +1,4 @@
-<?php
-	include_once 'accesscontrol.php';
-	include_once 'displaylogic.php';
-	include_once 'common.php';
-	include_once 'login.php';
-?>
-<html lang="en">
+<html><html lang="en">
 <head>
   <meta charset="utf-8">
   <title>College Bowl Picker Page</title>
@@ -38,20 +32,12 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
   <script src="PickScript.js"></script>
   <style>
-	#confidenceSort .bowl{background: #33CCCC; margin: 0; padding: 0; color: white;}
-	#confidenceSort td{cursor: grab; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
+	#leaderboardTbl {top: 5px;}
+	#leaderboardTbl td{cursor: grab; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
 	#headerRow td {padding: 10px;font-weight: bold; background: #33CCCC; color: #FFFFFF; text-align: center; height: 10px;}
-	#confidenceSort td.highlight {background: #33FF99; font-weight: bold;}
-	#saveWarn {color: red;}
-	#confirmSave {color: green;}
-	#saveBtnRw {
-		color: red;
-		background: white;}
-	#warnOrComp {
-		background: white;
-		color: red;
-		font-weight: bold;
-	}
+	#leaderbaordTbl td.highlight {background: #33FF99; font-weight: bold;}
+	#leaderboardTbl tr { border: solid thin; }
+	#pts {color: green; font-weight: bold;}
 	form {
 		margin: 0 auto;
 		}
@@ -102,17 +88,55 @@
 			</div>
 		</div>	
 	</header>
-	<div id='pickTbl'>
-		 <?php
-		populatePickList($uid);
-		 ?>
-	</div>
+	<div id='leaderboardTbl'>
+<?php
+	
+	include_once 'common.php';
+	//Build leaderboard table
+	$bldTbl= "<table id='leaderboardTbl'>
+	<col width='10'><col width='180'><col width='10'><caption>Leaderboard</caption><thead id='headerRow'><td>Rank</td><td>Player</td><td>Points Scored</td></thead>
+		<tbody id='lbTblBody'>";
+	$endTbl="</tbody><tfoot></tfoot></table>";
+	$season = "2014";		
+	//pass db credentials to function
+	include 'login.php';
+	$link = mysqli_connect($servername,$username,$password,$pickemDb);
+	if (!$link){die("Connection error: " . mysqli_connect_errno());}
+	
+	$scoreQry = "SELECT picks.userid AS Player, SUM( 
+				CASE WHEN actResults.winner = picks.winner
+				THEN picks.confidence
+				ELSE 0 
+				END ) AS Points, SUM( 
+				CASE WHEN actResults.gameid IS NULL 
+				THEN picks.confidence
+				ELSE 0 
+				END ) AS AvailablePoints
+				FROM picks
+				JOIN games ON games.id = picks.gameid
+				LEFT 
+				JOIN actResults ON actResults.gameid = games.id
+				WHERE games.year =  '".$season."'
+				GROUP BY picks.userid
+				ORDER BY Points DESC";
 
+	$result = mysqli_query($link, $scoreQry);
+	if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
+	$rowCount = mysqli_num_rows($result);
+	echo $bldTbl;
+	$i = 1;
+	while ($row = mysqli_fetch_row($result)){
+		//Player[0], Points[1], Available Points [2]
+		echo "<tr id='user_".$row[0]."'><td align='center'>".$i."</td><td align='center' class='user'>".$row[0]."</td>
+		<td align='center'><span id='pts'>".$row[1]."</span> (".$row[2].")</td></tr>";
+		$i ++;
+	}
+	echo $endTbl;
+	
+	//Highlight current user's username in list
 
-
-<!-- Display lower third
--->
-
+?>
+</div>
 	<div class='clear'></div>
 	<div class='clear'></div>
 
@@ -159,6 +183,6 @@
 		</div>
 
 	</div>
-	</div>
 </body>
 </html>
+

@@ -1,0 +1,11 @@
+FeatureList.txt
+
+Admin Page
+ASPX login page
+	Find CSS snippets for login/signup
+Profile Page
+	Change name/password/photo
+Comments/Trash talk section
+Game commenting
+	Notifications/Subscribe to game threads
+Blog

@@ -10,28 +10,35 @@ $(document).ready(function() {
 	var winners;
 
 	//highlight buttons green
-    $('input:radio').each(function(i,e) {
-        if($(e).is(':checked')){
-            $(e).parent().addClass('highlight');
-            var $td = $(e).parent();
-            $td.siblings().removeClass('highlight');
-            $td.next().addClass('highlight');
-        }
+	$('input:radio').each(function(i,e) {
+		if($(e).is(':checked')){
+			$(e).parent().addClass('highlight');
+			var $td = $(e).parent();
+			$td.siblings().removeClass('highlight');
+			$td.next().addClass('highlight');
+	}
 	});
 	$('input:radio').change(function() {
-		$('#confirmSave').text("");
-		$('#saveWarn').text("You have made changes that have not been saved yet.");
+		$('#warnOrComp').text("You have made changes that have not been saved yet.");
+		$('#warnOrComp').css('color', 'red', 'font-weight', 'bold');
 		$(this).parent().addClass('highlight');
 		var $td = $(this).parent();
 		$td.siblings().removeClass('highlight');
 		$td.next().addClass('highlight');
 	});
-		
+	//Count number of rows in table
+	var numRows = document.getElementById('confidenceTbl').getElementsByTagName('tbody')[0].getElementsByTagName('tr').length;
+
+	//On resort
 	$('#confidenceSort').sortable({
-			update: function() {
+			update: function( event, ui ) {
 				confidence = $('#confidenceSort').sortable('serialize');
+				$(this).find('tr').each(function(i){
+					$(this).find('td:last').text(numRows-i);
+				});
 				winners = $('#winners').serialize();
 				$('#warnOrComp').text("You have made changes that have not been saved yet.");
+				$('#warnOrComp').css('color', 'red');
 			}
 	});
 	
@@ -42,12 +49,11 @@ $(document).ready(function() {
 				winners = $('#winners').serialize();
 				$.post("postpicks.php", confidence, 
 					function(result){
-						//$('#postRes').text(result);
-						//$('#responseText').text("CONFIDENCE Query is complete.");
 					})
 				$.post("postpicks.php", {winStr: winners}, 
 					function(result){
-						$('#warnOrComp').text("Your picks have been successfully saved.");
+						$('#warnOrComp').text("Your picks have been successfully saved!");
+						$('#warnOrComp').css('color', 'green');
 				})
 	});
 });

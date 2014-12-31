@@ -10,9 +10,11 @@
 //SPIT FROM DB
 	function populatePickList($user){
 		//prep table HTML
-		$bldTbl= "<form id='winners'><table id='confidenceTbl'><col width='180'><col width='10'><col width='180'><col width='10'><col width='180'><thead id='headerRow'><td>Bowl</td><td></td><td>Team 1</td><td></td><td>Team 2</td><td>Game Day</td></thead>".
+		$bldTbl= "<form id='winners'><table id='confidenceTbl'><col width='180'><col width='10'><col width='180'><col width='10'><col width='180'><thead id='headerRow'><td>Bowl</td><td></td><td>Team 1</td><td></td><td>Team 2</td><td>Game Day</td><td>Conf.</td></thead>".
 				"<tbody id='confidenceSort'>";
-		$endTbl="<tr id='saveBtnRw'><td bgcolor='white' colspan='6'><input id='saveBtn' type='button' value='Save' /></td></tr><tr><td bgcolor='white' colspan='6' id='warnOrComp'></td></tr></tbody></tbody></table></form>";
+		$endTbl="</tbody><tfoot><tr><td bgcolor='white' colspan='7' id='warnOrComp'></td></tr>
+				<tr id='saveBtnRw'><td bgcolor='white' colspan='7'><input id='saveBtn' type='button' value='Save' /></td></tr>
+				</tfoot></table></form>";
 				
 		//pass db credentials to function
 		include 'login.php';
@@ -22,6 +24,7 @@
 		$result = mysqli_query($link, $sql);
 		if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
 		$rowCount = mysqli_num_rows($result);
+		
 		//errmsg($user);
 		if ($rowCount > 0){
 			//SQL to get table populate information
@@ -33,10 +36,11 @@
 				"ORDER BY picks.confidence ASC";
 			$result = mysqli_query($link, $sql);
 			if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
-			$rowCount = mysqli_num_rows($result);
+			$gameCount = mysqli_num_rows($result);
 			echo $bldTbl;
 			//loop through games and output HTML string
 			while ($row = mysqli_fetch_row($result)){
+				$conf = $gameCount- $row[6];
 				//gameid[0], team1[1], team2[2], gameDay[3], bowl[4], userid[5], confidence[6], winner[7]
 				if ($row[1] == $row[7]){$val="checked";}
 				else{$val="";}
@@ -46,7 +50,7 @@
 				if ($row[2] == $row[7]){$val="checked";}
 				else{$val="";}
 				$rowBld= $rowBld ."<input type='radio' name='".$row[0]."' value='".$row[2]."' ".$val." />
-				</td><td class='team2'>".$row[2]."</td><td class='gameDay'>".$row[3]."</td></tr>";
+				</td><td class='team2'>".$row[2]."</td><td class='gameDay'>".$row[3]."</td><td>".$conf."</td></tr>";
 				echo $rowBld;
 			}
 			echo $endTbl;
@@ -59,15 +63,16 @@
 				"ORDER BY games.id ASC";
 			$result = mysqli_query($link, $sql);
 			if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
-			$rowCount = mysqli_num_rows($result);
+			$gameCount = mysqli_num_rows($result);
 			echo $bldTbl;
 			while ($row = mysqli_fetch_row($result)){
+				$conf = $gameCount- $row[6];
 				//gameid[0], team1[1], team2[2], gameDay[3], bowl[4], userid[5], confidence[6], winner[7]
 				echo "<tr id='game_".$row[0]."'><td class='bowl'>".$row[4]."</td>
 				<td id='radiocell'><input type='radio' name='".$row[0]."' value='".$row[1]."'></input>
 				</td><td class='team1'>".$row[1]."</td><td id='radiocell'>
 				<input type='radio' name='".$row[0]."' value='".$row[2]."'></input>
-				</td><td class='team2'>".$row[2]."</td><td class='gameDay'>".$row[3]."</td></tr>";
+				</td><td class='team2'>".$row[2]."</td><td class='gameDay'>".$row[3]."</td><td>".$conf."</td></tr>";
 			}
 			echo $endTbl;
 		}
