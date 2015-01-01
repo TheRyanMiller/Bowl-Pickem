@@ -48,11 +48,11 @@
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/skeleton.css">
 	<link rel="stylesheet" href="css/layout.css">
-	<link rel="stylesheet" href="css/tabs.css">
+	<link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-  <script src="js/tabs.js"></script>
+  <script src="js/admin.js"></script>
   <!--
   <script type="text/javascript">
 		  jQuery(document).ready(function() {
@@ -70,8 +70,8 @@
 		});
   </script>-->
   <style>
-	#addTeamTbl td{cursor: grab; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
-	#headerRow td {padding: 10px;font-weight: bold; background: #33CCCC; color: #FFFFFF; text-align: center; height: 10px;}
+	table.add td{cursor: grab; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
+	.tableHeader td {padding: 10px;font-weight: bold; background: #33CCCC; color: #FFFFFF; text-align: center; height: 10px;}
 	}
 	.highlight {
 		background: #33FF99; font-weight: bold;
@@ -147,36 +147,41 @@ TABS AND BODY OF ADMIN PAGE----------------
 <!-- TAB1 -->
         <div id="tab1" class="tab active">
             <p>
-			   <form id='addGame' action=''>
-					<table id='addTeamTbl'>
-						<thead id='headerRow'><tr><td colspan='2'>Add a game</td></tr></thead>
-						<tr><td>Team 1:</td><td><input type='text' name='team1' /><font color='red'>*</font></td></tr>
-						<tr><td>Team 2:</td><td><input type='text' name='team2' /><font color='red'>*</font></td></tr>
-						<tr><td>Game Day:</td><td><input type='date' name='gameDay' /><font color='red'>*</font></td></tr>
-						<tr><td>Season:</td><td>  <select id="addGameSeason" name="gameSeason" >
+			   <form id='addGameForm'>
+					<table id='addGameTbl' class='add'>
+						<thead class='tblHeader' id='headerRow'><tr><td colspan='2'>Add a game</td></tr></thead>
+						<tr><td>Bowl Name:</td><td><input type='text' id='bowlName' /><font color='red'>*</font></td></tr>
+						<tr><td>Team 1:</td><td><input type='text' id='team1' /><font color='red'>*</font></td></tr>
+						<tr><td>Team 2:</td><td><input type='text' id='team2' /><font color='red'>*</font></td></tr>
+						<tr><td>Game Day:</td><td><input type='date' id='gameDay' /><font color='red'>*</font></td></tr>
+						<tr><td>Season:</td><td>  <select id="addSeason" name="gameSeason" >
 													 <option value="0">Select season</option>
 													 <option value="2014">2014</option>
 													</select><font color='red'>*</font></td></tr>
-						<tr><td colspan='2'><input type='submit' name='add' value='Add'></td>
+						<tr><td colspan='2'><button class='add' id='addGame' value='Add'>Add</button></td>
 					</table>
 				</form>
             </p>
         </div>
+ 
  <!-- TAB2 -->
+ 
         <div id="tab2" class="tab">
             <p>Add/Update Seasons</p>
-            <form id='editSeasons' action=''>
-					<table id='addSeasonTbl'>
+            <form id='editSeasons'>
+					<table id='addSeasonTbl' class='add'>
 						<thead id='headerRow'><tr><td colspan='2'>Add a season</td></tr></thead>
 						<tr><td>Title:</td><td><input type='text' name='seasonTitle' /><font color='red'>*</font></td></tr>
 						<tr><td>Start Date:</td><td><input type='date' name='startDate' /><font color='red'>*</font></td></tr>
 						<tr><td>Lock Date:</td><td><input type='date' name='lockDate' /><font color='red'>*</font></td></tr>
 						<tr><td>End Date:</td><td><input type='date' name='endDate' /><font color='red'>*</font></td></tr>
-						<tr><td colspan='2'><input type='submit' name='add' value='Add'></td>
+						<tr><td colspan='2'><button class='add' id='addSeason' value='Add'>Add</button></td>
 					</table>
 				</form>
         </div>
+        
  <!-- TAB3 -->
+        
         <div id="tab3" class="tab">
             <p>GAME RESULTS</p>
             <p>
@@ -210,7 +215,9 @@ TABS AND BODY OF ADMIN PAGE----------------
 					<tr></tr>
 				</table>
         </div>
+        
  <!-- TAB4 -->
+        
         <div id="tab4" class="tab">
             <p>Tab #4 content goes here!</p>
             <p>Donec pulvinar neque sed semper lacinia. Curabitur lacinia ullamcorper nibh; quis imperdiet 

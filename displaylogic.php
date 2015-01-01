@@ -10,10 +10,11 @@
 //SPIT FROM DB
 	function populatePickList($user){
 		//prep table HTML
-		$bldTbl= "<form id='winners'><table id='confidenceTbl'><col width='180'><col width='10'><col width='180'><col width='10'><col width='180'><thead id='headerRow'><td>Bowl</td><td></td><td>Team 1</td><td></td><td>Team 2</td><td>Game Day</td><td>Conf.</td></thead>".
-				"<tbody id='confidenceSort'>";
-		$endTbl="</tbody><tfoot><tr><td bgcolor='white' colspan='7' id='warnOrComp'></td></tr>
-				<tr id='saveBtnRw'><td bgcolor='white' colspan='7'><input id='saveBtn' type='button' value='Save' /></td></tr>
+		$bldTbl= "<form id='winners'><table id='confidenceTbl'><col width='180'><col width='10'><col width='180'><col width='10'><col width='180'>
+				<thead class='tblHead' id='headerRow'><td>Bowl</td><td></td><td>Team 1</td><td></td><td>Team 2</td><td>Game Day</td><td>Conf.</td></thead>".
+				"<tbody class='sortableTbl' id='confidenceSort'>";
+		$endTbl="</tbody><tfoot><tr><td id = 'msgText' bgcolor='white' colspan='7'></td></tr>
+				<tr class='btnRow'><td bgcolor='white' colspan='7'><input id='savePicksBtn' type='button' value='Save' /></td></tr>
 				</tfoot></table></form>";
 				
 		//pass db credentials to function
@@ -30,7 +31,7 @@
 			//SQL to get table populate information
 			$sql= "SELECT games.id, games.team1, games.team2, games.date, games.bowl, picks.userid, picks.confidence, picks.winner ".
 				"FROM picks ".
-				"INNER JOIN games ON picks.gameid = games.id ".
+				"LEFT JOIN games ON picks.gameid = games.id ".
 				"WHERE picks.userid = '".$user."' ".
 				"AND games.year = '2014' ".
 				"ORDER BY picks.confidence ASC";
@@ -44,7 +45,7 @@
 				//gameid[0], team1[1], team2[2], gameDay[3], bowl[4], userid[5], confidence[6], winner[7]
 				if ($row[1] == $row[7]){$val="checked";}
 				else{$val="";}
-				$rowBld= "<tr id='game_".$row[0]."'><td class='bowl'>".$row[4]."</td>
+				$rowBld= "<tr id='game_".$row[0]."'><td class='leftHead'>".$row[4]."</td>
 				<td id='radiocell'><input type='radio' name='".$row[0]."' value='".$row[1]."' ".$val."/>
 				</td><td class='team1'>".$row[1]."</td><td id='radiocell'>";
 				if ($row[2] == $row[7]){$val="checked";}
@@ -68,7 +69,7 @@
 			while ($row = mysqli_fetch_row($result)){
 				$conf = $gameCount- $row[6];
 				//gameid[0], team1[1], team2[2], gameDay[3], bowl[4], userid[5], confidence[6], winner[7]
-				echo "<tr id='game_".$row[0]."'><td class='bowl'>".$row[4]."</td>
+				echo "<tr id='game_".$row[0]."'><td class='leftHead'>".$row[4]."</td>
 				<td id='radiocell'><input type='radio' name='".$row[0]."' value='".$row[1]."'></input>
 				</td><td class='team1'>".$row[1]."</td><td id='radiocell'>
 				<input type='radio' name='".$row[0]."' value='".$row[2]."'></input>

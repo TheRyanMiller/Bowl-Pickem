@@ -41,7 +41,7 @@ h5 b {font-weight: bold;}
 
 
 /*
-* Lista NIE uporzadkowana UL
+* List UL
 */
 ul {font-size: 14px; margin: 7px 0; padding-left: 10px;}
 ul li {margin-bottom: 5px;}
@@ -72,7 +72,20 @@ header h1 {font-size: 3em; margin-bottom: 10px;}
 header h2 {font-size: 2em;}
 header h4 {font-weight: normal; margin-bottom: 10px;}
 
+/*
+* Tables, THeads, and .Sortables
+*/
+table {margin: 0 auto;}
+.sortableTbl .leftHead {background: #F0F0F0; margin: 0; padding: 0;}
+.sortableTbl td{cursor: grab; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
+.sortableTbl td.highlight {background: #33FF99; font-weight: bold;}
+.tblHead td {padding: 10px;font-weight: bold; background: #33CCCC; color: #FFFFFF; text-align: center; height: 10px;}
 
+/*
+* Result Message Text
+*/
+.warnText {color: red;}
+.confirmText {color: green;}
 
 
 /*
@@ -143,6 +156,8 @@ input.error, textarea.error {border-color: #cc4847;}
 
 input[type='submit'] {width: 502px; padding: 12px 0; font-size: 16px; border: none; background: #eee; color: #aaa; cursor: pointer;}
 input[type='submit']:hover {background: #1EBA6B; color: #fff;}
+button.add {width: 502px; padding: 12px 0; font-size: 16px; border: none; background: #eee; color: #aaa; cursor: pointer;}
+button.add:hover {background: #1EBA6B; color: #fff;}
 
 
 

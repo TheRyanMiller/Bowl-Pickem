@@ -3,6 +3,9 @@
 	include_once 'displaylogic.php';
 	include_once 'common.php';
 	include_once 'login.php';
+	
+	session_start();
+	$uid = $_SESSION['uid'];
 ?>
 <html lang="en">
 <head>
@@ -34,36 +37,10 @@
 	<link rel="stylesheet" href="css/skeleton.css">
 	<link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-  <script src="PickScript.js"></script>
+  <script src="js/PickScript.js"></script>
   <style>
-	#confidenceSort .bowl{background: #33CCCC; margin: 0; padding: 0; color: white;}
-	#confidenceSort td{cursor: grab; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
-	#headerRow td {padding: 10px;font-weight: bold; background: #33CCCC; color: #FFFFFF; text-align: center; height: 10px;}
-	#confidenceSort td.highlight {background: #33FF99; font-weight: bold;}
-	#saveWarn {color: red;}
-	#confirmSave {color: green;}
-	#saveBtnRw {
-		color: red;
-		background: white;}
-	#warnOrComp {
-		background: white;
-		color: red;
-		font-weight: bold;
-	}
-	form {
-		margin: 0 auto;
-		}
-	}
-	input 
-	#saveBtn{
-		text-align: center;
-	}
-	table {
-    margin: 0 auto;
-	}
-
   </style>
 </head>
 <body>
@@ -103,6 +80,7 @@
 		</div>	
 	</header>
 	<div id='pickTbl'>
+		<br>_
 		 <?php
 		populatePickList($uid);
 		 ?>
