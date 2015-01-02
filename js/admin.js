@@ -6,6 +6,7 @@ function seasonSelect(season){
 };
 
 $(document).ready(function() {
+
     $('.tabs .tab-links a').on('click', function(e)  {
         var currentAttrValue = $(this).attr('href');
  
@@ -18,29 +19,83 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
+//
+//
+//ADD GAME FORM SUBMIT
+//
+//
     $('#addGame').on('click', function(){
-		//Form validation
-//		if ($('#bowlName').value == null || $('#team1').value == null || $('#team2').value == null || $('#gameDay').value == null || $('#addSeason').value == null){
-//			alert("Please fill out the required fields");
-//			return false;
-//		}
-		//else
-		if ($('#bowlName').value == "" || $('#team1').value == "" || $('#team2').value == "" || $('#gameDay').value == "" || $('#addSeason').value == ""){
+		if ($('#bowlName').val() == "" || $('#team1').val() == "" || $('#team2').val() == "" || $('#gameDay').val() == "" || $('#selectSeason').val() == ""){
 			alert("Please fill out the required fields");
 			return false;
 		}
 		//End form validation
 		else{
-			var gameInfo2 = $('#bowlName').val() + ";" + $('#team1').val() + ";" + $('#team2').val() + ";" + $('#gameDay').val() + ";" + $('#addSeason').val();
+			var gameInfo2 = $('#bowlName').val() + ";" + $('#team1').val() + ";" + $('#team2').val() + ";" + $('#gameDay').val() + ";" + $('#selectSeason').val();
+			//alert(gameInfo2);
+
 			$.post("updateresults.php", {gameStr: gameInfo2}, 
 					function(result){
-						$('#bowlName').value = "";
-						$('#team1').value = $('#team1').defaultValue;
-						$('#team2').value = "";
-						//$('#addSeason').value = "";
-						$('#gameDay').value = "";
-						alert("added");
-					})
+						if(result){
+							var addGameConf = "There was a problem adding this to the database.";
+							$('#addGameMsg').removeClass('confirmText');
+							$('#addGameMsg').addClass('warnText');
+							$('#addGameMsg').text(addGameConf);
+						}
+						else{
+							var bowl = $('#bowlName').val();
+							var addGameConf = "Successfully added " + bowl + " to the database";
+							$('#addGameMsg').text(addGameConf);
+							$('#addGameMsg').removeClass('warnText');
+							$('#addGameMsg').addClass('confirmText');
+							$('#bowlName').val('');
+							$('#team1').val('');
+							$('#team2').val('');
+							$('#selectSeason').val('');
+							$('#gameDay').val('');
+						}
+					}
+			)			
+		}
+	});
+
+//
+//
+//ADD SEASON FORM SUBMIT
+//
+//
+    $('#addSeason').on('click', function(){
+		if ($('#seasonYear').val() == "" || $('#seasonTitle').val() == "" || $('#seasonStart').val() == "" || $('#seasonLock').val() == "" || $('#seasonEnd').val() == ""){
+			alert("Please fill out the required fields");
+			return false;
+		}
+		//End form validation
+		else{
+			var seasonInfo2 = $('#seasonYear').val() + ";" + $('#seasonTitle').val() + ";" + $('#seasonStart').val() + ";" + $('#seasonLock').val() + ";" + $('#seasonEnd').val();
+			alert(seasonInfo2);
+
+			$.post("updateresults.php", {seasonStr: seasonInfo2}, 
+					function(result){
+						if(result){
+							var addGameConf = "There was a problem adding this to the database.";
+							$('#addSeasonMsg').removeClass('confirmText');
+							$('#addSeasonMsg').addClass('warnText');
+							$('#addSeasonMsg').text(addGameConf);
+						}
+						else{
+							var seasonTitle = $('#seasonTitle').val();
+							var addSeasonConf = "Successfully added " + seasonTitle + " to the database";
+							$('#addSeasonMsg').text(addSeasonConf);
+							$('#addSeasonMsg').removeClass('warnText');
+							$('#addSeasonMsg').addClass('confirmText');
+							$('#seasonYear').val('');
+							$('#seasonTitle').val('');
+							$('#seasonStart').val('');
+							$('#seasonLock').val('');
+							$('#seasonEnd').val('');
+						}
+					}
+			)			
 		}
 	});
     

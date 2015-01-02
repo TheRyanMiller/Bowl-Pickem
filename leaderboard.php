@@ -87,7 +87,7 @@
 			</div>
 		</div>	
 	</header>
-	<div id='leaderboardTbl'>
+	<div id='leaderboardTbl'>_
 <?php
 	
 	include_once 'common.php';

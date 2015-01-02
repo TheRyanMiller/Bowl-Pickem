@@ -27,15 +27,26 @@
 //ADD SEASON TAB
 //------------
 
+	if(isset($_POST['seasonStr'])){
+		//VALIDATE FIELDS ARE FULL/VALID!!!
+		$seasonStr = $_POST['seasonStr'];
+		$seasonInfo = explode(';', $seasonStr);
+		//year;title;startDate;lockDate;endDate
+		$addSeasonQry = "INSERT INTO seasons (year, title, startDate, lockDate, endDate)
+						VALUES ('".$seasonInfo[0]."', '".$seasonInfo[1]."', '".$seasonInfo[2]."', '".$seasonInfo[3]."', '".$seasonInfo[4]."')";
+		$result = mysqli_query($link, $addSeasonQry);
+		if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
+		else {
+		}
+	}
 
 
 //------------------------
 //GAME RESULTS TAB
 //------------------------
 
-	if (isset($_POST['seasonStr'])){
-		$seasonStr=$_POST['seasonStr'];
-		errmsg($seasonStr);
+	if (isset($_POST['aaa'])){
+
 	}
 	
 	function chooseWinners(){
@@ -69,5 +80,32 @@
 //------------
 //USER PAYMENTS TAB
 //------------
+
+
+
+//RESULTS DISPLAY RECORD ACTIONS
+//Delete
+
+	if(isset($_POST['recordDel'])){
+		$recordId = $_POST['recordDel'];
+		//$delRecordInfo = explode(';', $recordId);
+		$delSeasonQry = "DELETE FROM seasons WHERE year = '".$recordId."'";
+		$result = mysqli_query($link, $delSeasonQry);
+		if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
+		else {
+		}
+	}
+//Edit Season
+	if(isset($_POST['recordEdit'])){
+		$editStr = $_POST['recordEdit'];
+		$editStr = substr($editStr, 0, -1);
+		$editRecs = explode('&', $editStr);
+		foreach($editRecs as $value){
+			$indvEdits = explode(';', $value);
+			$editSeasonQry = "UPDATE seasons SET year='".$indvEdits[0]."', startDate='".$indvEdits[1]."', lockDate='".$indvEdits[2]."', endDate='".$indvEdits[3]."', title='".$indvEdits[4]."' WHERE year = '".$indvEdits[0]."'";
+			$result = mysqli_query($link, $editSeasonQry);
+			if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
+		}
+	}
 
 ?>

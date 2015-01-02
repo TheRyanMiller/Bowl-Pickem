@@ -53,26 +53,8 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
   <script src="js/admin.js"></script>
-  <!--
-  <script type="text/javascript">
-		  jQuery(document).ready(function() {
-			jQuery('.tabs .tab-links a').on('click', function(e)  {
-				var currentAttrValue = jQuery(this).attr('href');
-		 
-				// Show/Hide Tabs
-				jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
-		 
-				// Change/remove current tab to active
-				jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
-		 
-				e.preventDefault();
-			});
-		});
-  </script>-->
+
   <style>
-	table.add td{cursor: grab; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
-	.tableHeader td {padding: 10px;font-weight: bold; background: #33CCCC; color: #FFFFFF; text-align: center; height: 10px;}
-	}
 	.highlight {
 		background: #33FF99; font-weight: bold;
 		}
@@ -147,20 +129,18 @@ TABS AND BODY OF ADMIN PAGE----------------
 <!-- TAB1 -->
         <div id="tab1" class="tab active">
             <p>
-			   <form id='addGameForm'>
-					<table id='addGameTbl' class='add'>
-						<thead class='tblHeader' id='headerRow'><tr><td colspan='2'>Add a game</td></tr></thead>
-						<tr><td>Bowl Name:</td><td><input type='text' id='bowlName' /><font color='red'>*</font></td></tr>
-						<tr><td>Team 1:</td><td><input type='text' id='team1' /><font color='red'>*</font></td></tr>
-						<tr><td>Team 2:</td><td><input type='text' id='team2' /><font color='red'>*</font></td></tr>
-						<tr><td>Game Day:</td><td><input type='date' id='gameDay' /><font color='red'>*</font></td></tr>
-						<tr><td>Season:</td><td>  <select id="addSeason" name="gameSeason" >
-													 <option value="0">Select season</option>
-													 <option value="2014">2014</option>
-													</select><font color='red'>*</font></td></tr>
-						<tr><td colspan='2'><button class='add' id='addGame' value='Add'>Add</button></td>
-					</table>
-				</form>
+				<table id='addGameTbl' class='add'>
+					<thead class='tblHead'><tr><td colspan='2'>Add a game</td></tr></thead>
+					<tr><td>Bowl Name:</td><td><input type='text' id='bowlName' /><font color='red'>*</font></td></tr>
+					<tr><td>Team 1:</td><td><input type='text' id='team1' /><font color='red'>*</font></td></tr>
+					<tr><td>Team 2:</td><td><input type='text' id='team2' /><font color='red'>*</font></td></tr>
+					<tr><td>Game Day:</td><td><input type='date' id='gameDay' /><font color='red'>*</font></td></tr>
+					<tr><td>Season:</td><td>  <select id="selectSeason" name="gameSeason" >													 <option value="0">Select season</option>
+											 <option value="2014">2014</option>
+											</select><font color='red'>*</font></td></tr>
+					<tr><td id='addGameMsg' class='confirmText' colspan='2'></td></tr>
+					<tr><td colspan='2'><button class='add' id='addGame' value='Add'>Add</button></td></tr>
+				</table>
             </p>
         </div>
  
@@ -168,16 +148,16 @@ TABS AND BODY OF ADMIN PAGE----------------
  
         <div id="tab2" class="tab">
             <p>Add/Update Seasons</p>
-            <form id='editSeasons'>
 					<table id='addSeasonTbl' class='add'>
-						<thead id='headerRow'><tr><td colspan='2'>Add a season</td></tr></thead>
-						<tr><td>Title:</td><td><input type='text' name='seasonTitle' /><font color='red'>*</font></td></tr>
-						<tr><td>Start Date:</td><td><input type='date' name='startDate' /><font color='red'>*</font></td></tr>
-						<tr><td>Lock Date:</td><td><input type='date' name='lockDate' /><font color='red'>*</font></td></tr>
-						<tr><td>End Date:</td><td><input type='date' name='endDate' /><font color='red'>*</font></td></tr>
-						<tr><td colspan='2'><button class='add' id='addSeason' value='Add'>Add</button></td>
+						<thead class ='tblHead'><tr><td colspan='2'>Add a season</td></tr></thead>
+						<tr><td>Year:</td><td><input type='text' id='seasonYear' name='seasonYear' /><font color='red'>*</font></td></tr>
+						<tr><td>Title:</td><td><input type='text' id='seasonTitle' name='seasonTitle' /><font color='red'>*</font></td></tr>
+						<tr><td>Start Date:</td><td><input type='date' id='seasonStart' name='startDate' /><font color='red'>*</font></td></tr>
+						<tr><td>Lock Date:</td><td><input type='date' id='seasonLock' name='lockDate' /><font color='red'>*</font></td></tr>
+						<tr><td>End Date:</td><td><input type='date' id='seasonEnd' name='endDate' /><font color='red'>*</font></td></tr>
+						<tr><td colspan='2'><button class='add' id='addSeason' value='Add'>Add</button></td></tr>
+						<tr><td id='addSeasonMsg' class='confirmText' colspan='2'></td></tr>
 					</table>
-				</form>
         </div>
         
  <!-- TAB3 -->

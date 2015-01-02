@@ -76,10 +76,13 @@ header h4 {font-weight: normal; margin-bottom: 10px;}
 * Tables, THeads, and .Sortables
 */
 table {margin: 0 auto;}
+table.add td {border-radius: 0px; padding: 10px;font-size: 1em; height: 10px;}
 .sortableTbl .leftHead {background: #F0F0F0; margin: 0; padding: 0;}
-.sortableTbl td{cursor: grab; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
+.sortableTbl td{; border-radius: 0px; padding: 10px;font-size: 1em; height: 10px; background: #F0F0F0}
 .sortableTbl td.highlight {background: #33FF99; font-weight: bold;}
 .tblHead td {padding: 10px;font-weight: bold; background: #33CCCC; color: #FFFFFF; text-align: center; height: 10px;}
+.tblHead tr {padding: 10px;font-weight: bold; background: #33CCCC; color: #FFFFFF; text-align: center; height: 10px;}
+
 
 /*
 * Result Message Text
@@ -88,12 +91,12 @@ table {margin: 0 auto;}
 .confirmText {color: green;}
 
 
+
 /*
 * Logo
 */
 .logo a {color: #444; text-decoration: none; line-height: 20px;}
 .logo a:hover {color: #33CCCC;}
-
 
 
 
