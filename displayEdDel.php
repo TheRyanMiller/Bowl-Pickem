@@ -22,11 +22,18 @@
 		});
 		
 		//auto-size
-		$('input').each(function(){
+		$('.varLength').each(function(){
 			var value = $(this).val();
 			var size  = value.length * 2;
-			$(this).css('width',size*4);
-			$('.yearId').css('width',size*4);
+			$(this).css('size',size*4);
+			$('.yearId').css('size',size*4);
+		})
+		
+		$('input').each(function(){
+			var value = 20;
+			var size  = value.length * 2;
+			$(this).css('size',size*4);
+			$('.yearId').css('size',size*4);
 		})
 
 		//toggle disable/enable on "edit click"
@@ -136,7 +143,6 @@
 			float:right;
 			background: blue;
 		}
-		
 	</style>
 </head>
 <body>
@@ -144,40 +150,39 @@
 <div id='containerDiv'>
 	<div id='right'>
 	</div>
-<div id='phpOut'>
-	<?php
+	<div id='phpOut'>
+		<?php
+			//Database stuff
+			include_once 'login.php';
+			include_once 'common.php';
+			$link = mysqli_connect($servername,$username,$password,$pickemDb);
+			if (!$link){die("Connection error: " . mysqli_connect_errno());}
+			$listSeasonsQry ="SELECT year, startDate, lockDate, endDate, title FROM seasons";
+			$result = mysqli_query($link, $listSeasonsQry);
+			if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
 
-		//Database stuff
-		include_once 'login.php';
-		include_once 'common.php';
-		$link = mysqli_connect($servername,$username,$password,$pickemDb);
-		if (!$link){die("Connection error: " . mysqli_connect_errno());}
-		$listSeasonsQry ="SELECT year, startDate, lockDate, endDate, title FROM seasons";
-		$result = mysqli_query($link, $listSeasonsQry);
-		if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
+			//Build 5 column table (year, startDate, lockDate, endDate, title)
+			$tableStart="<table id='seasonList'><thead><tr></tr><td>Year</td><td>Start</td><td>Lock</td><td>End</td><td>Title</td><td></td><td></td></tr></thead><tbody>";
+			$tableEnd="</tbody><tfoot><tr><td colspan='4'><button id='saveSeasonEdit'>Save Edits</button></td></tr></tfoot></table>";
+			echo $tableStart;
+			
+			//Display list of records
+			while ($row = mysqli_fetch_row($result)){
+				echo "<tr><td><input id='".$row[0]."' type='text' class='varLength' value='".$row[0]."' disabled /> </td>";
+				echo "<td><input id='startDate_".$row[0]."' type='date' class='varLength' value='".$row[1]."' disabled /> </td>";
+				echo "<td><input id='lockDate_".$row[0]."' type='date' class='varLength' value='".$row[2]."' disabled /> </td>";
+				echo "<td><input id='endDate_".$row[0]."' type='date' class='varLength' value='".$row[3]."' disabled /> </td>";
+				echo "<td><input id='title_".$row[0]."' type='text' class='varLength' value='".$row[4]."' disabled /> </td>"; 
+				//Add edit and delete button rows
+				echo "<td><button class='editBtn' id='edit_".$row[0]."'>Edit</button></td>";
+				echo "<td><button class='deleteBtn' id='delete_".$row[0]."'>Delete</button></td></tr>";
+			}
+			echo $tableEnd;
+			echo "<div id='textput'></div>";
+			//Edit Delete Actions
 
-		//Build 5 column table (year, startDate, lockDate, endDate, title)
-		$tableStart="<table id='seasonList'><thead><tr></tr><td>Year</td><td>Start</td><td>Lock</td><td>End</td><td>Title</td><td></td><td></td></tr></thead><tbody>";
-		$tableEnd="</tbody><tfoot><tr><td colspan='4'><button id='saveSeasonEdit'>Save Edits</button></td></tr></tfoot></table>";
-		echo $tableStart;
-		
-		//Display list of records
-		while ($row = mysqli_fetch_row($result)){
-			echo "<tr><td><input id='".$row[0]."' type='text' class='yearId' value='".$row[0]."' disabled /> </td>";
-			echo "<td><input id='startDate_".$row[0]."' type='date' value='".$row[1]."' disabled /> </td>";
-			echo "<td><input id='lockDate_".$row[0]."' type='date' value='".$row[2]."' disabled /> </td>";
-			echo "<td><input id='endDate_".$row[0]."' type='date' value='".$row[3]."' disabled /> </td>";
-			echo "<td><input id='title_".$row[0]."' type='text' value='".$row[4]."' disabled /> </td>"; 
-			//Add edit and delete button rows
-			echo "<td><button class='editBtn' id='edit_".$row[0]."'>Edit</button></td>";
-			echo "<td><button class='deleteBtn' id='delete_".$row[0]."'>Delete</button></td></tr>";
-		}
-		echo $tableEnd;
-		echo "<div id='textput'></div>";
-		//Edit Delete Actions
-
-	?>
-</div>
-</div>
+		?>
+	</div>
+	</div>
 </body>
 </html>

@@ -159,7 +159,7 @@ input.error, textarea.error {border-color: #cc4847;}
 
 input[type='submit'] {width: 502px; padding: 12px 0; font-size: 16px; border: none; background: #eee; color: #aaa; cursor: pointer;}
 input[type='submit']:hover {background: #1EBA6B; color: #fff;}
-button.add {width: 502px; padding: 12px 0; font-size: 16px; border: none; background: #eee; color: #aaa; cursor: pointer;}
+button.add {width: 100%; padding: 12px 0; font-size: 16px; border: none; background: #eee; color: #aaa; cursor: pointer;}
 button.add:hover {background: #1EBA6B; color: #fff;}
 
 

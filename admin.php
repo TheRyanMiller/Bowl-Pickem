@@ -54,7 +54,20 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
   <script src="js/admin.js"></script>
 
-  <style>
+	<style>
+	.tab-container {
+		width:80%;
+		margin:0 auto;
+		overflow: auto;
+	}
+	.right-center {
+		width:50%;
+		float:right;
+	}
+	.left-center {
+		width:50%;
+		float:left;
+	}
 	.highlight {
 		background: #33FF99; font-weight: bold;
 		}
@@ -146,8 +159,9 @@ TABS AND BODY OF ADMIN PAGE----------------
  
  <!-- TAB2 -->
  
-        <div id="tab2" class="tab">
-            <p>Add/Update Seasons</p>
+		<div id="tab2" class="tab">
+			<div class='tab-container'>
+				<div class='left-center'>
 					<table id='addSeasonTbl' class='add'>
 						<thead class ='tblHead'><tr><td colspan='2'>Add a season</td></tr></thead>
 						<tr><td>Year:</td><td><input type='text' id='seasonYear' name='seasonYear' /><font color='red'>*</font></td></tr>
@@ -158,8 +172,36 @@ TABS AND BODY OF ADMIN PAGE----------------
 						<tr><td colspan='2'><button class='add' id='addSeason' value='Add'>Add</button></td></tr>
 						<tr><td id='addSeasonMsg' class='confirmText' colspan='2'></td></tr>
 					</table>
-        </div>
-        
+				</div>
+				<div class='right-center'>
+					<?php
+					$listSeasonsQry ="SELECT year, startDate, lockDate, endDate, title FROM seasons";
+					$result = mysqli_query($link, $listSeasonsQry);
+					if (!$result) {errmsg('A database error occurred. Please contact Ryan.');}
+
+					//Build 5 column table (year, startDate, lockDate, endDate, title)
+					$tableStart="<table id='seasonList'><thead class='tblHead'><tr></tr><td>Year</td><td>Start</td><td>Lock</td><td>End</td><td>Title</td><td></td><td></td></tr></thead><tbody>";
+					$tableEnd="</tbody><tfoot><tr><td colspan='4'><button id='saveSeasonEdit' class='add'>Save Edits</button></td></tr></tfoot></table>";
+					echo $tableStart;
+					
+					//Display list of records
+					while ($row = mysqli_fetch_row($result)){
+						echo "<tr><td><input id='".$row[0]."' type='text' class='varLength' value='".$row[0]."' disabled /> </td>";
+						echo "<td><input id='startDate_".$row[0]."' type='date' class='varLength' value='".$row[1]."' disabled /> </td>";
+						echo "<td><input id='lockDate_".$row[0]."' type='date' class='varLength' value='".$row[2]."' disabled /> </td>";
+						echo "<td><input id='endDate_".$row[0]."' type='date' class='varLength' value='".$row[3]."' disabled /> </td>";
+						echo "<td><input id='title_".$row[0]."' type='text' class='varLength' value='".$row[4]."' disabled /> </td>"; 
+						//Add edit and delete button rows
+						echo "<td><button class='editBtn' id='edit_".$row[0]."'>Edit</button></td>";
+						echo "<td><button class='deleteBtn' id='delete_".$row[0]."'>Delete</button></td></tr>";
+					}
+					echo $tableEnd;
+					echo "<div id='textput'></div>";
+					//Edit Delete Actions
+					?>
+				</div>
+			</div>
+		</div>
  <!-- TAB3 -->
         
         <div id="tab3" class="tab">
@@ -199,9 +241,9 @@ TABS AND BODY OF ADMIN PAGE----------------
  <!-- TAB4 -->
         
         <div id="tab4" class="tab">
-            <p>Tab #4 content goes here!</p>
-            <p>Donec pulvinar neque sed semper lacinia. Curabitur lacinia ullamcorper nibh; quis imperdiet 
-            velit eleifend ac. Donec blandit mauris eget aliquet lacinia! Donec pulvinar massa interdum risus ornare mollis. In hac habitasse platea dictumst. Ut euismod tempus hendrerit. Morbi ut adipiscing nisi. Etiam rutrum sodales gravida! Aliquam tellus orci, iaculis vel.</p>
+            <p>User Payment Tab Report information goes here</p>
+            <p>The "User Payments" section is under construction. This area will be used to track which players have paid their
+            league dues, and which ones have not.</p>
         </div>
     </div>
 </div>
