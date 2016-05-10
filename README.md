@@ -1,7 +1,7 @@
 Bowl-Pickem
 ===========
 
-Built using LAMP Stack.
+Built using LAMP (Linux, Apache, MySQL, PHP).
 
 Web application designed to host annual NCAA bowl season Pick 'Em challenge among friends.
 All users register for an account. Authentication determines league commissioner.
